@@ -8,26 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingSecondView = false
+    @State private var numbers = [Int]()
+    @State private var number = 0
     var body: some View {
-        VStack(alignment: .leading) {
-            Button("show/hide the View") {
-                showingSecondView.toggle()
+        NavigationStack {
+            VStack {
+                List {
+                    ForEach(numbers, id: \.self) {
+                        Text("number \($0)")
+                    }
+                    .onDelete(perform: { indexSet in
+                        removeElement(at: indexSet)
+                    })
+                }
+                Button("Add number") {
+                    numbers.append(number)
+                    number += 1
+                }
             }
-            .sheet(isPresented: $showingSecondView) {
-                SecondView()
+            .toolbar {
+                EditButton()
             }
         }
-        .padding()
     }
-}
-
-struct SecondView: View {
-    @Environment(\.dismiss) var dismiss
-    var body: some View {
-        Button("dismiss") {
-            dismiss()
-        }
+    func removeElement(at offset: IndexSet) {
+        numbers.remove(atOffsets: offset)
     }
 }
 
