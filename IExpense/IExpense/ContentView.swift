@@ -6,24 +6,28 @@
 //
 
 import SwiftUI
-import Observation
-
-@Observable
-class User {
-    var lastName = "Last"
-    var firstName = "First"
-}
 
 struct ContentView: View {
-    @State var user = User()
+    @State private var showingSecondView = false
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Firstname: \(user.firstName)")
-            Text("Lastname: \(user.lastName)")
-            TextField("first name", text: $user.firstName)
-            TextField("last name", text: $user.lastName)
+            Button("show/hide the View") {
+                showingSecondView.toggle()
+            }
+            .sheet(isPresented: $showingSecondView) {
+                SecondView()
+            }
         }
         .padding()
+    }
+}
+
+struct SecondView: View {
+    @Environment(\.dismiss) var dismiss
+    var body: some View {
+        Button("dismiss") {
+            dismiss()
+        }
     }
 }
 
