@@ -31,7 +31,17 @@ struct AddView: View {
                 TextField("amount", value: $amount, formatter: AddView.currencyFormatter)
                     .keyboardType(.decimalPad)
             }
+            .toolbar {
+                Button("Save") {
+                    saveItem()
+                }
+            }
         }
+    }
+    
+    func saveItem() {
+        let item = ExpenseItem(name: name, type: type, amount: amount)
+        expenses.items.append(item)
     }
 }
 
