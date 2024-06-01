@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddView: View {
+    @Environment(\.dismiss) var dismiss
     var expenses: Expenses
     static let currencyFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
@@ -33,15 +34,12 @@ struct AddView: View {
             }
             .toolbar {
                 Button("Save") {
-                    saveItem()
+                    let item = ExpenseItem(name: name, type: type, amount: amount)
+                    expenses.items.append(item)
+                    dismiss()
                 }
             }
         }
-    }
-    
-    func saveItem() {
-        let item = ExpenseItem(name: name, type: type, amount: amount)
-        expenses.items.append(item)
     }
 }
 
