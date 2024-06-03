@@ -51,6 +51,7 @@ struct ContentView: View {
                         }
                         Spacer()
                         Text(item.amount, format: .currency(code: item.currencyCode))
+                            .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
                     }
                 }
                 .onDelete(perform: { indexSet in
