@@ -27,9 +27,9 @@ class Expenses {
     
     init() {
         if let savedItems = UserDefaults.standard.data(forKey: "Items") {            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
-                items = decodedItems
-                return
-            }
+            items = decodedItems
+            return
+        }
         }
         items = []
     }
@@ -41,8 +41,27 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses.items) { item in
-                    HStack {
+                Section("Personal") {
+                    ForEach(expenses.items) { item in
+                        if item.type == "Personal" {                     HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                    .font(.headline)
+                                Text(item.type)
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                            Text(item.amount, format: .currency(code: item.currencyCode))
+                                .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
+                        }
+                        }
+                    }
+                    .onDelete(perform: { indexSet in
+                        removeAtOffset(at: indexSet)
+                    })
+                }
+                Section("Business") {                        ForEach(expenses.items) { item in
+                    if item.type == "Business" {                     HStack {
                         VStack(alignment: .leading) {
                             Text(item.name)
                                 .font(.headline)
@@ -53,10 +72,13 @@ struct ContentView: View {
                         Text(item.amount, format: .currency(code: item.currencyCode))
                             .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
                     }
+                    }
                 }
                 .onDelete(perform: { indexSet in
                     removeAtOffset(at: indexSet)
                 })
+                    
+                }
             }
             .navigationTitle("iExpense")
             .toolbar {
