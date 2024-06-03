@@ -10,13 +10,13 @@ import SwiftUI
 struct AddView: View {
     @Environment(\.dismiss) var dismiss
     var expenses: Expenses
-    static let currencyFormatter: NumberFormatter = {
+    @State var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.locale = Locale(identifier: "en_US")
         return formatter
     }()
-    @State private var currencyLocale = "en_US"
+    @State private var currencyLocale = "USD"
     let currencyLocales = ["USD", "EUR", "KRW"]
     @State private var name = ""
     @State private var amount = 0.0
@@ -39,14 +39,14 @@ struct AddView: View {
                 .pickerStyle(.segmented)
                 .onChange(of: currencyLocale) { oldValue, newValue in
                     if newValue == "USD" {
-                        AddView.currencyFormatter.locale = Locale(identifier: "en_US")
+                        currencyFormatter.locale = Locale(identifier: "en_US")
                     } else if newValue == "EUR" {
-                        AddView.currencyFormatter.locale = Locale(identifier: "fr_FR")
+                        currencyFormatter.locale = Locale(identifier: "fr_FR")
                     } else {
-                        AddView.currencyFormatter.locale = Locale(identifier: "ko_KR")
+                        currencyFormatter.locale = Locale(identifier: "ko_KR")
                     }
                 }
-                TextField("amount", value: $amount, formatter: AddView.currencyFormatter)
+                TextField("amount", value: $amount, formatter: currencyFormatter)
                     .keyboardType(.decimalPad)
             }
             .toolbar {
