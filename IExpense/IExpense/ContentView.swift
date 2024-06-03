@@ -12,6 +12,7 @@ struct ExpenseItem: Identifiable, Codable {
     let name: String
     let type: String
     let amount: Double
+    let currencyCode: String
 }
 
 @Observable
@@ -49,7 +50,7 @@ struct ContentView: View {
                                 .font(.subheadline)
                         }
                         Spacer()
-                        Text(item.amount, format: .currency(code: "USD"))
+                        Text(item.amount, format: .currency(code: item.currencyCode))
                     }
                 }
                 .onDelete(perform: { indexSet in

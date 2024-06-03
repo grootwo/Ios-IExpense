@@ -36,6 +36,7 @@ struct AddView: View {
                         Text($0)
                     }
                 }
+                .pickerStyle(.segmented)
                 .onChange(of: currencyLocale) { oldValue, newValue in
                     if newValue == "USD" {
                         AddView.currencyFormatter.locale = Locale(identifier: "en_US")
@@ -50,7 +51,7 @@ struct AddView: View {
             }
             .toolbar {
                 Button("Save") {
-                    let item = ExpenseItem(name: name, type: type, amount: amount)
+                    let item = ExpenseItem(name: name, type: type, amount: amount, currencyCode: currencyLocale)
                     expenses.items.append(item)
                     dismiss()
                 }
