@@ -18,14 +18,13 @@ struct AddView: View {
     }()
     @State private var currencyLocale = "USD"
     let currencyLocales = ["USD", "EUR", "KRW"]
-    @State private var name = ""
+    @State private var name = "Expense's name"
     @State private var amount = 0.0
     @State private var type = "Personal"
     let types = ["Personal", "Business"]
     var body: some View {
         NavigationStack {
             Form {
-                TextField("name", text: $name)
                 Picker("type", selection: $type) {
                     ForEach(types, id: \.self) {
                         Text($0)
@@ -57,6 +56,8 @@ struct AddView: View {
                 }
             }
             .navigationBarBackButtonHidden()
+            .navigationTitle($name)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
