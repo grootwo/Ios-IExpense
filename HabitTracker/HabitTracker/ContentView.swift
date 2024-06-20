@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var habits = [Habit(title: "매일 낙법 연습하기", description: "매일 전방/측방/후방 낙법 최소 10번 연습하기 "), Habit(title: "낙법 연습하기", description: "전방/측방/후방 낙법 최소 10번 연습하기 ")]
+    @State var habits = Habits()
     @State var isShowingAddView = false
     var body: some View {
         NavigationStack {
             List {
-                ForEach($habits, id: \.self) { $habit in
+                ForEach($habits.items, id: \.self) { $habit in
                     NavigationLink(destination: HabitView(habit: $habit), label: {
                         HStack {
                             Text("\(habit.title)")
@@ -33,7 +33,7 @@ struct ContentView: View {
                 })
             }
             .sheet(isPresented: $isShowingAddView) {
-                AddView(habits: $habits, isShowingAddView: $isShowingAddView)
+                AddView(habits: habits, isShowingAddView: $isShowingAddView)
             }
         }
     }

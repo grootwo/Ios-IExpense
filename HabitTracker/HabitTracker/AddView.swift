@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddView: View {
-    @Binding var habits: [Habit]
+    var habits: Habits
     @Binding var isShowingAddView: Bool
     @State var title = ""
     @State var description = ""
@@ -25,7 +25,7 @@ struct AddView: View {
             }
             .toolbar {
                 Button(action: {
-                    habits.append(Habit(title: title, description: description))
+                    habits.items.append(Habit(title: title, description: description))
                     isShowingAddView = false
                 }, label: {
                     Text("Save")
