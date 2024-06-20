@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct AddView: View {
+    @Binding var habits: [Habit]
+    @Binding var isShowingAddView: Bool
     @State var title = ""
     @State var description = ""
     var body: some View {
-        Form {
-            Section("Title") {
-                TextField("Input the habit's title", text: $title)
+        NavigationStack {
+            Form {
+                Section("Title") {
+                    TextField("Input the habit's title", text: $title)
+                }
+                Section("Description") {
+                    TextField("Describe about the habit", text: $description)
+                        .multilineTextAlignment(.leading)
+                }
             }
-            Section("Description") {
-                TextField("Describe about the habit", text: $description)
-                    .multilineTextAlignment(.leading)
+            .toolbar {
+                Button(action: {
+                    habits.append(Habit(title: title, description: description))
+                    isShowingAddView = false
+                }, label: {
+                    Text("Save")
+                })
             }
         }
     }
-}
-
-#Preview {
-    AddView()
 }
