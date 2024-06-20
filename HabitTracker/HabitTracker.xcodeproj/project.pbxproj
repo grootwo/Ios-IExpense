@@ -11,6 +11,7 @@
 		1B14ABF22C2402AF00E8BD79 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B14ABF12C2402AF00E8BD79 /* ContentView.swift */; };
 		1B14ABF42C2402B000E8BD79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B14ABF32C2402B000E8BD79 /* Assets.xcassets */; };
 		1B14ABF72C2402B000E8BD79 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B14ABF62C2402B000E8BD79 /* Preview Assets.xcassets */; };
+		1B14ABFE2C2402EF00E8BD79 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B14ABFD2C2402EF00E8BD79 /* Habit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		1B14ABF12C2402AF00E8BD79 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1B14ABF32C2402B000E8BD79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B14ABF62C2402B000E8BD79 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1B14ABFD2C2402EF00E8BD79 /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				1B14ABEF2C2402AF00E8BD79 /* HabitTrackerApp.swift */,
 				1B14ABF12C2402AF00E8BD79 /* ContentView.swift */,
+				1B14ABFD2C2402EF00E8BD79 /* Habit.swift */,
 				1B14ABF32C2402B000E8BD79 /* Assets.xcassets */,
 				1B14ABF52C2402B000E8BD79 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B14ABFE2C2402EF00E8BD79 /* Habit.swift in Sources */,
 				1B14ABF22C2402AF00E8BD79 /* ContentView.swift in Sources */,
 				1B14ABF02C2402AF00E8BD79 /* HabitTrackerApp.swift in Sources */,
 			);
