@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Habit {
+struct Habit: Hashable {
     var title: String
     var description: String
-    var successCount: Int
+    var successCount = 0
 }
