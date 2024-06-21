@@ -14,7 +14,7 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach($habits.items, id: \.self) { $habit in
-                    NavigationLink(destination: HabitView(habit: $habit), label: {
+                    NavigationLink(destination: HabitView(habit: $habit, successCount: habit.successCount), label: {
                         HStack {
                             Text("\(habit.title)")
                                 .font(.headline)
