@@ -59,23 +59,25 @@ struct ContentView: View {
                         removeAtOffset(at: indexSet)
                     })
                 }
-                Section("Business") {                        ForEach(expenses.items) { item in
-                    if item.type == "Business" {                     HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .font(.headline)
-                            Text(item.type)
-                                .font(.subheadline)
+                Section("Business") {
+                    ForEach(expenses.items) { item in
+                        if item.type == "Business" {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(item.name)
+                                        .font(.headline)
+                                    Text(item.type)
+                                        .font(.subheadline)
+                                }
+                                Spacer()
+                                Text(item.amount, format: .currency(code: item.currencyCode))
+                                    .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
+                            }
                         }
-                        Spacer()
-                        Text(item.amount, format: .currency(code: item.currencyCode))
-                            .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
                     }
-                    }
-                }
-                .onDelete(perform: { indexSet in
-                    removeAtOffset(at: indexSet)
-                })
+                    .onDelete(perform: { indexSet in
+                        removeAtOffset(at: indexSet)
+                    })
                     
                 }
             }
