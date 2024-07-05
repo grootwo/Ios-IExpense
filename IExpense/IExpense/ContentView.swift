@@ -6,53 +6,55 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct ExpenseItem: Identifiable, Codable {
-    var id = UUID()
-    let name: String
-    let type: String
-    let amount: Double
-    let currencyCode: String
-}
-
-@Observable
-class Expenses {
-    var items = [ExpenseItem]() {
-        didSet {
-            if let encoded = try? JSONEncoder().encode(items) {
-                UserDefaults.standard.set(encoded, forKey: "Items")
-            }
-        }
-    }
-    
-    init() {
-        if let savedItems = UserDefaults.standard.data(forKey: "Items") {            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
-            items = decodedItems
-            return
-        }
-        }
-        items = []
-    }
-}
+//struct ExpenseItem: Identifiable, Codable {
+//    var id = UUID()
+//    let name: String
+//    let type: String
+//    let amount: Double
+//    let currencyCode: String
+//}
+//
+//@Observable
+//class Expenses {
+//    var items = [ExpenseItem]() {
+//        didSet {
+//            if let encoded = try? JSONEncoder().encode(items) {
+//                UserDefaults.standard.set(encoded, forKey: "Items")
+//            }
+//        }
+//    }
+//    
+//    init() {
+//        if let savedItems = UserDefaults.standard.data(forKey: "Items") {            if let decodedItems = try? JSONDecoder().decode([ExpenseItem].self, from: savedItems) {
+//            items = decodedItems
+//            return
+//        }
+//        }
+//        items = []
+//    }
+//}
 
 struct ContentView: View {
-    @State private var expenses = Expenses()
+    @Environment(\.modelContext) var modelContext
+    @Query var expenses: [Expense]    
     var body: some View {
         NavigationStack {
             List {
                 Section("Personal") {
-                    ForEach(expenses.items) { item in
-                        if item.type == "Personal" {
+                    ForEach(expenses) { expense in
+                        if expense.type == "Personal" {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(item.name)
+                                    Text(expense.name)
                                         .font(.headline)
-                                    Text(item.type)
+                                    Text(expense.type)
                                         .font(.subheadline)
                                 }
                                 Spacer()
-                                Text(item.amount, format: .currency(code: item.currencyCode))
-                                    .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
+                                Text(expense.amount, format: .currency(code: expense.currencyCode))
+                                    .foregroundStyle(expense.amount < 10 ? .black.opacity(0.3) : (expense.amount < 100 ? .black.opacity(0.6) : .black))
                             }
                         }
                     }
@@ -61,18 +63,18 @@ struct ContentView: View {
                     })
                 }
                 Section("Business") {
-                    ForEach(expenses.items) { item in
-                        if item.type == "Business" {
+                    ForEach(expenses) { expense in
+                        if expense.type == "Business" {
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(item.name)
+                                    Text(expense.name)
                                         .font(.headline)
-                                    Text(item.type)
+                                    Text(expense.type)
                                         .font(.subheadline)
                                 }
                                 Spacer()
-                                Text(item.amount, format: .currency(code: item.currencyCode))
-                                    .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
+                                Text(expense.amount, format: .currency(code: expense.currencyCode))
+                                    .foregroundStyle(expense.amount < 10 ? .black.opacity(0.3) : (expense.amount < 100 ? .black.opacity(0.6) : .black))
                             }
                         }
                     }
@@ -85,7 +87,7 @@ struct ContentView: View {
             .navigationTitle("iExpense")
             .toolbar {
                 NavigationLink {
-                    AddView(expenses: expenses)
+                    AddView()
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -94,7 +96,8 @@ struct ContentView: View {
     }
     
     func removeAtOffset(at offset: IndexSet) {
-        expenses.items.remove(atOffsets: offset)
+//        var expense = expenses[offset]
+//        modelContext.delete(expense)
     }
 }
 

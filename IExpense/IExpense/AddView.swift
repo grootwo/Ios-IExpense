@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddView: View {
+    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
-    var expenses: Expenses
     @State var currencyFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -50,8 +50,8 @@ struct AddView: View {
             }
             .toolbar {
                 Button("Save") {
-                    let item = ExpenseItem(name: name, type: type, amount: amount, currencyCode: currencyLocale)
-                    expenses.items.append(item)
+                    let expense = Expense(name: name, type: type, amount: amount, currencyCode: currencyLocale)
+                    modelContext.insert(expense)
                     dismiss()
                 }
             }
@@ -63,5 +63,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView(expenses: Expenses())
+    AddView()
 }
