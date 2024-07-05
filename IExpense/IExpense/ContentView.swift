@@ -50,11 +50,6 @@ struct ContentView: View {
                 }
         }
     }
-    
-    func removeAtOffset(at offset: IndexSet) {
-        //        var expense = expenses[offset]
-        //        modelContext.delete(expense)
-    }
 }
 
 #Preview {

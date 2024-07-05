@@ -27,7 +27,7 @@ struct ExpenseListView: View {
                 }
             }
             .onDelete(perform: { indexSet in
-                //                    removeAtOffset(at: indexSet)
+                deleteExpense(at: indexSet)
             })
         }
     }
@@ -37,7 +37,13 @@ struct ExpenseListView: View {
             showingType.contains(expense.type)
         }, sort: sortOrder)
     }
-}
+    
+    func deleteExpense(at offsets: IndexSet) {
+        for offset in offsets {
+            let expense = expenses[offset]
+            modelContext.delete(expense)
+        }
+    }}
 
 #Preview {
     ExpenseListView(showingType: ["Personal", "Business"], sortOrder: [SortDescriptor(\Expense.amount)])
