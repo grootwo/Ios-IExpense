@@ -10,66 +10,50 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) var modelContext
-    @Query var expenses: [Expense]    
+    @Query var expenses: [Expense]
+    @State private var sortOrder = [SortDescriptor(\Expense.amount)]
+    @State private var showingType = ["Personal", "Business"]
     var body: some View {
         NavigationStack {
-            List {
-                Section("Personal") {
-                    ForEach(expenses) { expense in
-                        if expense.type == "Personal" {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(expense.name)
-                                        .font(.headline)
-                                    Text(expense.type)
-                                        .font(.subheadline)
-                                }
-                                Spacer()
-                                Text(expense.amount, format: .currency(code: expense.currencyCode))
-                                    .foregroundStyle(expense.amount < 10 ? .black.opacity(0.3) : (expense.amount < 100 ? .black.opacity(0.6) : .black))
+            ExpenseListView(showingType: showingType, sortOrder: sortOrder)
+                .navigationTitle("iExpense")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink {
+                            AddView()
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                            Picker("Sort", selection: $sortOrder) {
+                                Text("Sort by price")
+                                    .tag([SortDescriptor(\Expense.amount), SortDescriptor(\Expense.name)])
+                                Text("Sort by name")
+                                    .tag([SortDescriptor(\Expense.name), SortDescriptor(\Expense.amount)])
                             }
                         }
                     }
-                    .onDelete(perform: { indexSet in
-                        removeAtOffset(at: indexSet)
-                    })
-                }
-                Section("Business") {
-                    ForEach(expenses) { expense in
-                        if expense.type == "Business" {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(expense.name)
-                                        .font(.headline)
-                                    Text(expense.type)
-                                        .font(.subheadline)
-                                }
-                                Spacer()
-                                Text(expense.amount, format: .currency(code: expense.currencyCode))
-                                    .foregroundStyle(expense.amount < 10 ? .black.opacity(0.3) : (expense.amount < 100 ? .black.opacity(0.6) : .black))
+                    ToolbarItem(placement: .topBarLeading) {
+                        Menu("Filter", systemImage: "line.3.horizontal.decrease") {
+                            Picker("Filter", selection: $showingType) {
+                                Text("All")
+                                    .tag(["Personal", "Business"])
+                                Text("Only Personal")
+                                    .tag(["Personal"])
+                                Text("Only Business")
+                                    .tag(["Business"])
                             }
                         }
                     }
-                    .onDelete(perform: { indexSet in
-                        removeAtOffset(at: indexSet)
-                    })
-                    
                 }
-            }
-            .navigationTitle("iExpense")
-            .toolbar {
-                NavigationLink {
-                    AddView()
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
         }
     }
     
     func removeAtOffset(at offset: IndexSet) {
-//        var expense = expenses[offset]
-//        modelContext.delete(expense)
+        //        var expense = expenses[offset]
+        //        modelContext.delete(expense)
     }
 }
 
