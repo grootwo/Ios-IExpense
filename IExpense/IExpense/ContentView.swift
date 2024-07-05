@@ -42,17 +42,18 @@ struct ContentView: View {
             List {
                 Section("Personal") {
                     ForEach(expenses.items) { item in
-                        if item.type == "Personal" {                     HStack {
-                            VStack(alignment: .leading) {
-                                Text(item.name)
-                                    .font(.headline)
-                                Text(item.type)
-                                    .font(.subheadline)
+                        if item.type == "Personal" {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(item.name)
+                                        .font(.headline)
+                                    Text(item.type)
+                                        .font(.subheadline)
+                                }
+                                Spacer()
+                                Text(item.amount, format: .currency(code: item.currencyCode))
+                                    .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
                             }
-                            Spacer()
-                            Text(item.amount, format: .currency(code: item.currencyCode))
-                                .foregroundStyle(item.amount < 10 ? .black.opacity(0.3) : (item.amount < 100 ? .black.opacity(0.6) : .black))
-                        }
                         }
                     }
                     .onDelete(perform: { indexSet in
