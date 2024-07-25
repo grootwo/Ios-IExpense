@@ -25,6 +25,9 @@ struct ExpenseListView: View {
                     Text(expense.amount, format: .currency(code: expense.currencyCode))
                         .foregroundStyle(expense.amount < 10 ? .black.opacity(0.3) : (expense.amount < 100 ? .black.opacity(0.6) : .black))
                 }
+                .accessibilityElement()
+                .accessibilityLabel("\(expense.name), \(expense.amount)")
+                .accessibilityHint("\(expense.type)")
             }
             .onDelete(perform: { indexSet in
                 deleteExpense(at: indexSet)
